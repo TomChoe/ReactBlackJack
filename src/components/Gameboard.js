@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import Deck from './Deck';
 import Card from './Card';
 
 export default class Gameboard extends Component {
@@ -47,20 +46,38 @@ export default class Gameboard extends Component {
 		}
 	}
 
-	testShowDeck() {
-		for(let i=0; i < this.state.deck.length; i++) {
-			console.log('this is each card ', this.state.deck[i].props)
+	deal() {
+		let player = this.state.playerCards;
+		let dealer = this.state.dealerCards;
+		let dek = this.state.deck;
+		for(let i=0; i<4; i++) {
+			if(player.length < 1) {
+				console.log('dealing player', i)
+				player.push(dek.shift())
+			} else if(dealer.length < 1) {
+				console.log('dealing dealer', i)
+				dealer.push(dek.shift())
+			} else if(player.length < 2) {
+				console.log('dealing player', i)
+				player.push(dek.shift())
+			} else if(dealer.length < 2) {
+				console.log('dealing dealer', i)
+				dealer.push(dek.shift())
+			}
 		}
+		console.log('player cards ', player);	
+		console.log('dealer cards ', dealer);
+		console.log('remaining deck of cards should be 48 ', dek)
 	}
 
 	render() {
 		this.createDeck();
 		this.shuffleDeck(this.state.deck);
-		this.testShowDeck();
+		this.deal();
 		return (
 			<div>
 			  <h1>Gameboard</h1>
-			  <Deck /><br/>
+			  
 			</div>
 		)
 	}
